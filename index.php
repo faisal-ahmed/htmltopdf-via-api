@@ -3,8 +3,8 @@
 require_once('./htmltopdf/WkHtmlToPdf.php');
 
 $options = array(
-    'binPath' => 'D:/wkhtmltopdf/bin/wkhtmltopdf',
-//    'binPath' => "./htmltopdf/wkhtmltox/bin/wkhtmltopdf",
+//    'binPath' => 'D:/wkhtmltopdf/bin/wkhtmltopdf',
+    'binPath' => "/opt/wkhtmltox/bin/wkhtmltopdf",
     'binName' => 'wkhtmltopdf',
     'tmp' => "./tmp"
 );
@@ -17,6 +17,8 @@ if (isset($_REQUEST['url']) && $_REQUEST['url'] !== '') {
     $pdf->addPage($url);
     $pdf->saveAs("./static/$fileName");
 
-    $return = $_SERVER['HTTP_HOST'] . str_replace("index.php", "", $_SERVER['PHP_SELF']) . 'static/' . $fileName;
-    echo $return;
+    $return = array(
+        'url' => $_SERVER['HTTP_HOST'] . str_replace("index.php", "", $_SERVER['PHP_SELF']) . 'static/' . $fileName
+    );
+    echo json_encode($return);
 }
